@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "descended-ghasts",
+	"version": "${version}",
+	"name": "Descended Ghasts",
+	"description": "This is a Minecraft mod developed by iSharpedge that makes it so the Happy Ghast can descend with a button press.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/descended-ghasts/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"descendedghasts.DescendedGhasts"
+		],
+		"fabric-datagen": [
+			"descendedghasts.DescendedGhastsDataGenerator"
+		],
+      "client": [
+        "descendedghasts.DescendedGhastsClient"
+      ]
+	},
+	"mixins": [
+		"descended-ghasts.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.2",
+		"minecraft": "~1.21.9",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
