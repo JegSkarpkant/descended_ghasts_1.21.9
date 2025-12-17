@@ -18,7 +18,7 @@ import org.lwjgl.glfw.GLFW;
 public class DescendedGhastsClient implements ClientModInitializer {
 
     public static KeyBinding Descend_Key;
-    private static final double Max_Descend_Speed = -0.5;
+    private static final double Max_Descend_Speed = -0.1;
     private static final double Acceleration = -0.015;
 
     //public static final Identifier Descending_Packet = Identifier.of("descendedghasts", "descend");
