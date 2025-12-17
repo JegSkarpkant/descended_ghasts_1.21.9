@@ -3,15 +3,10 @@ package descendedghasts;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.passive.HappyGhastEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Vector3d;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -51,7 +46,7 @@ public class DescendedGhastsClient implements ClientModInitializer {
                         double newVy = Math.max(currentVel.y + Acceleration, Max_Descend_Speed);
                         vehicle.setVelocity(currentVel.x, newVy, currentVel.z);
                     }
-                    vehicle.velocityDirty = true;
+                    vehicle.velocityModified = true;
                 }
             }
         });
