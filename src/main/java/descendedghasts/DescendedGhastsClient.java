@@ -9,6 +9,9 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.passive.HappyGhastEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.GhastEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Vector3d;
 import org.lwjgl.glfw.GLFW;
 
 
@@ -17,6 +20,8 @@ public class DescendedGhastsClient implements ClientModInitializer {
     public static KeyBinding Descend_Key;
     private static final double Max_Descend_Speed = -0.5;
     private static final double Acceleration = -0.015;
+
+    //public static final Identifier Descending_Packet = Identifier.of("descendedghasts", "descend");
 
     @Override
     public void onInitializeClient() {
@@ -30,26 +35,25 @@ public class DescendedGhastsClient implements ClientModInitializer {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-                if (Descend_Key.isPressed() || InputUtil.isKeyPressed(client.getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
 
-                    if (client.player != null){
-                        if (client.player.hasVehicle()) {
-                            Entity vehicle = client.player.getVehicle();
+            if (client.player != null && Descend_Key != null) {
+                boolean isPressingDescend = Descend_Key.isPressed() ||
+                        InputUtil.isKeyPressed(client.getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL);
 
-                            if (vehicle instanceof HappyGhastEntity) {
-                                double currentVy = vehicle.getVelocity().getY();
-                                double newVy = currentVy + Acceleration;
-                                newVy = Math.max(newVy, Max_Descend_Speed);
+                if (isPressingDescend && client.player.getVehicle() instanceof HappyGhastEntity vehicle) {
+                    //ClientPlayNetworking.send(new DescendPayload());
 
-                                vehicle.setVelocity(
-                                        vehicle.getVelocity().getX(),
-                                        newVy,
-                                        vehicle.getVelocity().getZ()
-                                );
-                            }
-                        }
+                    if (vehicle.isOnGround()) {
+                        Vec3d currentVel = vehicle.getVelocity();
+                        vehicle.setVelocity(currentVel.x, 0, currentVel.z);
+                    } else {
+                        Vec3d currentVel = vehicle.getVelocity();
+                        double newVy = Math.max(currentVel.y + Acceleration, Max_Descend_Speed);
+                        vehicle.setVelocity(currentVel.x, newVy, currentVel.z);
                     }
+                    vehicle.velocityDirty = true;
                 }
+            }
         });
 
     }
